@@ -1,0 +1,2 @@
+-Rulat demo01, demo02, demo03.
+-Implementat ex01_multifasta_gc.py pentru cautare si calcul fractie

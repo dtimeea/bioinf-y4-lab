@@ -23,27 +23,20 @@ from Bio import SeqIO
 # ===================== TODO: Scoring matrix init =========================================
 
 def init_score_matrix_global(m: int, n: int, gap: int):
-    """
-    Inițializați matricea (m+1) x (n+1) pentru aliniere globală.
-    Pași:
-      - creați o listă de liste plină cu 0 (dimensiune (m+1)x(n+1)).
-      - prima coloană: [i * gap] pentru i=0..m
-      - prima linie: [j * gap] pentru j=0..n
-    Returnati matricea.
-    """
-    raise NotImplementedError("TODO: implementați inițializarea matricei globale")
-
+    score = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(m + 1):
+        score[i][0] = i * gap
+    for j in range(n + 1):
+        score[0][j] = j * gap
+    return score
+    
 
 def score_cell_global(score, i: int, j: int, a: str, b: str, match: int, mismatch: int, gap: int):
-    """
-    TODO: Calculați scorul unei celule (i, j).
-    Pași:
-      - diagonal = score[i-1][j-1] + (match dacă a == b altfel mismatch)
-      - sus      = score[i-1][j] + gap
-      - stânga   = score[i][j-1] + gap
-    Returnati max(diagonal, sus, stânga).
-    """
-    raise NotImplementedError("TODO: implementați scorarea pentru NW")
+    diag = score[i - 1][j - 1] + (match if a == b else mismatch)
+    up   = score[i - 1][j] + gap
+    left = score[i][j - 1] + gap
+    return max(diag, up, left)
+    
 
 
 def needleman_wunsch(seq1: str, seq2: str, match=1, mismatch=-1, gap=-2):

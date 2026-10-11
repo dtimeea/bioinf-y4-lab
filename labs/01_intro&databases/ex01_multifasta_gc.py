@@ -33,8 +33,7 @@ from pathlib import Path
 import sys
 
 from Bio import SeqIO
-# from Bio import Entrez  # TODO: deblocați și folosiți pentru descărcare
-
+from Bio import Entrez  
 
 def gc_fraction(seq: str) -> float:
     """Fracție GC pentru o secvență; robust la litere mici/mari și non-ATGC."""
@@ -59,8 +58,34 @@ def download_fasta(email: str, out_path: Path, query: str = None,
       - Scrieți rezultatele în out_path.
       - Returnați numărul de înregistrări scrise.
     """
-    raise NotImplementedError("TODO: implementați descărcarea cu Entrez")
+    Entrez.email = email
+    if api_key:
+        Entrez.api_key = api_key
 
+    ids_to_fetch = []
+
+    if accession:
+        ids_to_fetch = [accession]
+    elif query:
+        with Entrez.esearch(db=db, term=query, retmax=retmax) as h:
+            search_result = Entrez.read(h)
+            ids_to_fetch = search_result.get("IdList", [])
+    else:
+        raise ValueError("Trebuie să specificați --query sau --accession.")
+
+    if not ids_to_fetch:
+        print("Nu s-a găsit nicio înregistrare.", file=sys.stderr)
+        return 0
+
+    with Entrez.efetch(db=db, id=",".join(ids_to_fetch), rettype="fasta", retmode="text") as h:
+        out_path.write_text(h.read(), encoding="utf-8")
+
+    count = 0
+    with open(out_path, mode="r", encoding="utf-8") as handle:
+        for _ in SeqIO.parse(handle, "fasta"):
+            count += 1
+
+    return count
 
 def main():
     ap = argparse.ArgumentParser()
@@ -88,6 +113,24 @@ def main():
     # TODO: Calculați GC pentru fiecare secvență și afișați rezultatele
     # for rec in records:
     #     print(f"{rec.id}\tGC={valoare:.3f}")
+    n = download_fasta(
+        email=args.email,
+        out_path=out_path,
+        query=args.query,
+        accession=args.accession,
+        db=args.db,
+        retmax=args.retmax,
+        api_key=args.api_key
+    )
+    print(f"[ok] Am scris {n} înregistrări în: {out_path}")
+
+    if n == 0:
+        return
+
+    with open(out_path, mode="r", encoding="utf-8") as handle:
+        for rec in SeqIO.parse(handle, "fasta"):
+            valoare = gc_fraction(str(rec.seq))
+            print(f"{rec.id}\tGC={valoare:.3f}")
 
 
 if __name__ == "__main__":
