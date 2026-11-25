@@ -7,7 +7,7 @@ Scop:
 - să vedem classification_report + matrice de confuzie
 
 Fișier de intrare:
-- labs/08_ml/data/expression_demo.csv
+- labs/08_ML_flower/data/expression_demo.csv
   - rânduri: probe
   - coloane: gene (G1, ..., Gn) + ultima coloană 'Label'
 """
@@ -22,8 +22,8 @@ from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
-DATA_CSV = Path("../data/sample/tissue_gene_expression_demo.csv")
-OUT_DIR = Path("labs/08_ml/demo_outputs")
+DATA_CSV = Path("data/sample/tissue_gene_expression_demo.csv")
+OUT_DIR = Path("labs/08_ML_flower/demo_outputs")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 OUT_CONFUSION = OUT_DIR / "demo_logreg_confusion.png"
@@ -35,7 +35,7 @@ def main() -> None:
     print(df.head())
 
     # X = gene, y = Label
-    X = df.iloc[:, :-1]
+    X = df.iloc[:, :-1].drop(columns=["sample_id"])
     y = df.iloc[:, -1]
 
     # Encodare etichete
@@ -47,7 +47,7 @@ def main() -> None:
     # Împărțire train/test
     X_train, X_test, y_train, y_test = train_test_split(
         X, y_enc,
-        test_size=0.2,
+        test_size=0.5,
         random_state=42,
         stratify=y_enc,
     )

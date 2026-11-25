@@ -19,7 +19,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-OUT_DIR = Path("labs/08_ml/demo_outputs")
+OUT_DIR = Path("labs/08_ML_flower/demo_outputs")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 OUT_FIG_SUP = OUT_DIR / "demo_synthetic_supervised.png"
 OUT_FIG_UNSUP = OUT_DIR / "demo_synthetic_unsupervised.png"
