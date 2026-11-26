@@ -1,0 +1,8 @@
+Varianta: Chrom=chr17, Pos=7674220, ID=rs1042522, Ref=C, Alt=G
+Interogare utilizata: rs1042522
+Articole identificate (PMID): 42938823, 42832476, 42246034
+
+Varianta: Chrom=chr17, Pos=7675088, ID=., Ref=C, Alt=T
+Interogare utilizata: chr17:7675088 AND TP53
+Articole identificate (PMID): 42661989, 41648238, 38048050
+

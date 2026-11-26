@@ -1,0 +1,6 @@
+Raport FASTQ QC — Handle: dtimeea
+Fisier analizat: sample_fixed.fastq
+Numar total citiri: 2
+Lungime medie a citirilor: 195.00 bp
+Proportie baze ambigue (N): 0.000000 (0.0000%)
+Scor Phred mediu per baza: 15.02
