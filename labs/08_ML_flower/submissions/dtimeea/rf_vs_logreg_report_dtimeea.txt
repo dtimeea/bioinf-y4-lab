@@ -1,0 +1,23 @@
+=== Random Forest ===
+              precision    recall  f1-score   support
+
+ ER_negative       0.92      0.88      0.90        40
+ ER_positive       0.88      0.93      0.90        40
+
+    accuracy                           0.90        80
+   macro avg       0.90      0.90      0.90        80
+weighted avg       0.90      0.90      0.90        80
+
+=== Logistic Regression ===
+              precision    recall  f1-score   support
+
+ ER_negative       0.90      0.88      0.89        40
+ ER_positive       0.88      0.90      0.89        40
+
+    accuracy                           0.89        80
+   macro avg       0.89      0.89      0.89        80
+weighted avg       0.89      0.89      0.89        80
+
+=== Model comparison ===
+Random Forest accuracy: 0.9000
+Logistic Regression accuracy: 0.8875
